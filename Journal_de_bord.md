@@ -23,3 +23,20 @@ random.Random(graine) : créer un générateur pseudo-aléatoire indépendant po
 Choix retenu : Nous privilégions random.Random(graine), qui permet d'associer un générateur aléatoire indépendant à chaque partie, sans modifier celui utilisé globalement par Python.
 
 **Justification** : Cette approche facilite la reproductibilité des tests et le débogage, tout en respectant les principes de la programmation orientée objet. Pour les situations précises, nous pourrons également imposer directement un résultat de dé lors des tests.
+
+
+### Organisation du travail sur GitHub
+
+Maintenant que les fichiers du projet sont organisés et partagés sur GitHub, chacun pourra apporter directement ses modifications dans les fichiers correspondant à sa partie.
+
+Quelques règles à respecter pour faciliter le travail en groupe :
+
+-Travailler directement sur les fichiers existants plutôt que de créer plusieurs versions d'une même classe.
+-Garder une cohérence dans les noms des attributs et des méthodes.
+-Prévenir les autres membres lorsqu'on souhaite modifier un élément utilisé dans plusieurs classes.
+-Faire régulièrement des commits avec des messages explicites.
+-Récupérer les dernières modifications avec git pull avant de commencer à travailler.
+-Envoyer ses modifications sur GitHub avec git push après avoir terminé.
+
+
+« L'objectif est que tout le monde travaille sur une version commune et à jour du projet. »
