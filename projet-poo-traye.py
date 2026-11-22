@@ -14,7 +14,7 @@ class Partie:
             resultats.append(de)
         return resultats 
         
-    def de_double(resultats):
+    def de_double(self, resultats):
         if len(resultats) == 2:
             return resultats[0]==resultats[1]
         else:
