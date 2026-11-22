@@ -39,4 +39,7 @@ class Partie:
 
     def tour_joueur(self):
         """Déroule un tour complet du joueur courant."""
-        pass
+        joueur = self.joueurs[self.indice_courant]
+        resultats = self.lancer_des(1)
+        total = sum(resultats)
+        return total
