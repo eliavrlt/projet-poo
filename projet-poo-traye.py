@@ -8,7 +8,17 @@ class Partie:
 
     def lancer_des(self, nb_des):
         """Lance nb_des dés et renvoie la liste des résultats."""
-        pass
+        resultats = []
+        for i in range(nb_des):
+            de = self.rng.randint(1,6) 
+            resultats.append(de)
+        return resultats 
+        
+    def de_double(resultats):
+        if len(resultats) == 2:
+            return resultats[0]==resultats[1]
+        else:
+            return False
 
     def joueur_suivant(self):
         """Passe la main au joueur suivant (sens horaire)."""
