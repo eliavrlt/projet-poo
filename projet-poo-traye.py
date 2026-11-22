@@ -49,6 +49,11 @@ class Partie:
         if joueur.a_monument("Tour radio") and relancer:
             resultats = self.lancer_des(nb_des) # Le nouveau lancer REMPLACE l'ancien : une variable ne garde qu'une seule valeur à la fois, donc l'ancien résultat est oublié, même s'il était meilleur. C'est le nouveau qui compte pour la suite.
 
+        rejoue = False
+        if joueur.a_monument("Parc d'attractions") and self.de_double(resultats):
+            rejoue = True
+        if not rejoue:             # "not" inverse : si ce n'est pas le cas
+            self.joueur_suivant()
     
         total = sum(resultats)      # additionner les dés avec sum(...)
         return resultats, total
