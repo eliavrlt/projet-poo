@@ -22,8 +22,8 @@ class Partie:
     def lancer_des(self, nb_des):
         """Lance nb_des dés et renvoie la liste des résultats."""
         resultats = []
-        for i in range(nb_des):
-            de = self.rng.randint(1,6) 
+        for _ in range(nb_des):
+            de = self.rng.randint(1, 6) 
             resultats.append(de)
         return resultats 
         
@@ -43,7 +43,7 @@ class Partie:
 
         nb_des = 1
         if joueur.a_monument("Gare"):
-            nb_des =2
+            nb_des = 2
         resultats = self.lancer_des(nb_des)     # lancer nb_des dé avec lancer_des
        
         if joueur.a_monument("Tour radio") and relancer:
