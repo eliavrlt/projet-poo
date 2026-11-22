@@ -11,7 +11,7 @@ Cette difficulté nous a amenés à réfléchir à une organisation permettant u
 **Solution envisagée :** définir collectivement les responsabilités et les méthodes principales de chaque classe avant leur implémentation, puis organiser le développement de manière à limiter les dépendances bloquantes et faciliter l'intégration progressive du code.
 
 
-Choix technique (Classe Partie) — Gestion de l'aléatoire et reproductibilité des tests
+### Choix technique (Classe Partie) — Gestion de l'aléatoire et reproductibilité des tests
 
 Problématique : Le moteur de Miniville repose notamment sur des lancers de dés aléatoires. Or, cette dimension aléatoire peut compliquer la vérification du bon fonctionnement des méthodes, puisqu'un même test peut produire des résultats différents selon les exécutions.
 
