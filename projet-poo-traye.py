@@ -39,7 +39,12 @@ class Partie:
 
     def tour_joueur(self):
         """Déroule un tour complet du joueur courant."""
-        joueur = self.joueurs[self.indice_courant]
-        resultats = self.lancer_des(1)
-        total = sum(resultats)
-        return total
+        joueur = self.joueurs[self.indice_courant] # le joueur courant
+
+        nb_des = 1
+        if joueur.a_monument("Gare"):
+            nb_des =2
+        
+        resultats = self.lancer_des(nb_des)     # lancer nb_des dé avec lancer_des
+        total = sum(resultats)      # additionner les dés avec sum(...)
+        return resultats, total
