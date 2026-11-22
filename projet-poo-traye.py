@@ -1,7 +1,7 @@
 import random
 
 
-# En attendant que la classe Joueur soit définitivement, on utilise en reférence la classe suivante : 
+# En attendant que la classe Joueur soit définitivement créé, on utilise en reférence la classe suivante : 
 class Joueur:
     def __init__(self, nom):
         self.nom = nom
