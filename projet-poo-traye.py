@@ -21,8 +21,8 @@ class Partie:
             return False
 
     def joueur_suivant(self):
-        """Passe la main au joueur suivant (sens horaire)."""
-        pass
+        """Passe la main au joueur suivant (sens horaire). Convention du projet : l'ordre de la liste self.joueurs est l'ordre des joueurs autour de la table, dans le sens horaire. Passer au joueur d'indice + 1 revient donc à passer au joueur suivant dans le sens horaire, comme l'impose la règle du jeu"""
+        self.indice_courant = (self.indice_courant + 1)%len(self.joueurs) # L'opérateur % (modulo) donne le reste de la division par le nombre de joueurs : il ramène l'indice à 0 après le dernier joueur, ce qui fait boucler le tour.
 
     def tour_joueur(self):
         """Déroule un tour complet du joueur courant."""
