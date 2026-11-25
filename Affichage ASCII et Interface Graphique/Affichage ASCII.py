@@ -19,3 +19,22 @@ class Affichage:
     def texte_lancer(self, joueur, resultats):    # renvoie une phrase décrivant le lancer d'un joueur.
         mot = "dé" if len(resultats) == 1 else "dés"
         return f"{joueur.nom} lance {len(resultats)} {mot} : {resultats} (total : {sum(resultats})"
+
+
+
+    # à verifier avec Claude : étape 5
+    def texte_tour(self, joueur, action, montant=None, carte=None, destinataire=None) :
+        if action == "debut":
+            return f"C'est au tour de {joueur.nom}."
+        elif action == "gain":
+            mot = "pièce" if montant ==1 else "pièces"
+            return f"{joueur.nom} gagne {montant} {mot}."
+        elif action == "achat":
+            mot = "pièce" if montant == 1 else "pièces"
+            return f"{joueur.nom} achète {carte} pour {montant} {mot}."
+        elif action == "paiement":
+            mot = "pièce" if montant == 1 else "pièces"
+            return f"{joueur.nom} paie {montant} {mot} à {destinataire.nom}."
+        else: 
+            raise ValueError("Action inconnue")
+        
