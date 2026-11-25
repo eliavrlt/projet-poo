@@ -12,5 +12,10 @@ class Affichage:
     def etat_joueurs(self, joueurs, indice_courant): # Renvoie le texte décrivant tous les joueurs, un par ligne. indice_courant : position, dans la liste, du joueur dont c'est le tour.
         lignes = []
         for i in range(len(joueurs)):
-            est_courant =      
-              pass
+            est_courant = i == indice_courant
+            lignes.append(self.ligne_joueur(joueurs[i], est_courant))
+        return "\n".join(lignes)
+
+    def texte_lancer(self, joueur, resultats):    # renvoie une phrase décrivant le lancer d'un joueur.
+        mot = "dé" if len(resultats) == 1 else "dés"
+        return f"{joueur.nom} lance {len(resultats)} {mot} : {resultats} (total : {sum(resultats})"
