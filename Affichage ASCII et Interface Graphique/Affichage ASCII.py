@@ -61,3 +61,15 @@ class Affichage:
             lignes.append(f"|{ligne}|")     # entourer "ligne" d'une barre "|" de chaque côté
         lignes.append(bord)
         return "\n".join(lignes)
+        
+    def dessin_des(self, resultats):        # Renvoie le dessin ASCII de plusieurs dés côte à côte. resultats : la liste des valeurs, par exemple [6, 1].
+        des = []
+        for valeur in resultats:
+            des.append(self.dessin_de(valeur).split("\n"))
+        lignes = []
+        for i in range(5):                  # on assemble les lignes 0 à 4, une par une
+            morceaux = []
+            for de in des:
+                morceaux.append(de[i])           # la ligne numéro i de ce dé
+            lignes.append("  ".join(morceaux))   # deux espaces entre les dés
+        return "\n".join(lignes)
