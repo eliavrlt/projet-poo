@@ -1,4 +1,15 @@
 
+# Les dés en ASCII
+# Les 3 lignes du milieu de chaque face (Chaque face est un tuple de 3 chaînes : rangée du haut, du milieu et du bas. Chaque chaîne fait exactement 7 caractères, espaces compris).
+FACES_DES = {
+    1: ("       ", "   o   ", "       "),
+    2: ("     o ", "       ", " o     "),
+    3: ("     o ", "   o   ", " o     "),
+    4: (" o   o ", "       ", " o   o "),
+    5: (" o   o ", "   o   ", " o   o "),
+    6: (" o   o ", " o   o "," o   o ")}
+
+
 class Affichage:
     
     def ligne_joueur(self, joueur, est_courant): #Renvoie une ligne de texte décrivant un joueur. est_courant : True si c'est le tour de ce joueur (il est alors marqué d'un ">"). Exemple : "> Traye | 3 pièces | Monuments : Gare"
@@ -41,4 +52,12 @@ class Affichage:
             return f"{joueur.nom} a construit ses 4 monuments : victoire !"
         else: 
             raise ValueError(f"Action inconnue : {action}")
-        
+
+       def dessin_de(self, valeur):
+        """Renvoie le dessin ASCII d'un dé (5 lignes), pour une valeur de 1 à 6."""
+        bord = "+-------+"
+        lignes = [bord]
+        for ligne in FACES_DES[valeur]:
+            lignes.append(f"|{ligne}|")     # entourer "ligne" d'une barre "|" de chaque côté
+        lignes.append(bord)
+        return "\n".join(lignes)
