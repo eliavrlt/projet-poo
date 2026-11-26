@@ -53,7 +53,7 @@ class Affichage:
         else: 
             raise ValueError(f"Action inconnue : {action}")
 
-       def dessin_de(self, valeur):
+    def dessin_de(self, valeur):
         """Renvoie le dessin ASCII d'un dé (5 lignes), pour une valeur de 1 à 6."""
         bord = "+-------+"
         lignes = [bord]
