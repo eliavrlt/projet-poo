@@ -19,7 +19,7 @@ for numero in range(1, 4):
 
 
 
-# petit programme provisoire qui fait jouer une partie
+# petit programme provisoire qui fait jouer une partie de 3 tours
 
 partie = Partie([Joueur("Traye"), Joueur("Elia")], graine=42)
 partie.joueurs[0].monuments.update({"Gare", "Parc d'attractions"})   # pour tester le rejeu
@@ -32,6 +32,8 @@ for numero in range(1, 4):
     print(affichage.texte_tour(joueur, "debut"))
     resultats, total = partie.tour_joueur()
     print(affichage.texte_lancer(joueur, resultats))
+    print(affichage.dessin_des(resultats))
+
 
     # Rejeu : même condition que dans tour_joueur
     if joueur.a_monument("Parc d'attractions") and partie.de_double(resultats):
