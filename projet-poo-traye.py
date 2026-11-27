@@ -56,6 +56,29 @@ class Partie:
         """Demande au joueur s'il relance ses dés (Tour radio)."""
         reponse = input("Souhaitez-vous relancer et supprimer votre ancien jet ? (1 = Oui, 0 = Non) : ")
         return reponse == "1"
+        
+    def paiements(self, total):
+        """Cartes rouges: le joueur actuel paie les autres, dans le sens inverse des aiguilles d'une montre."""
+        n = len(self.joueurs)
+        for i in range(1, n):
+            indice = (self._indice_courant -i) % n
+            proprietaire = self._joueurs[indice]
+            for carte in proprietaire.ville.etablissements:
+                if isinstance(carte, Rouge) and carte.est_active(total, False):       # isinstance(carte, Rouge) veut dire « cette carte est-elle une carte rouge ? ». On l'utilise parce que les trois couleurs n'ont pas la même signature d'appliquer_effet, donc on s'adapte à chacune sans lui demander de changer.
+                    carte.appliquer_effet(proprietaire, self.joueur_actuel )
+
+    def revenus(self, total):
+        """ cartes bleues (tous les joueurs) puis vertes (joueur actuel) : revenus de la banque."""
+        # cartes bleues: elles rapportent à leur propriétaire, quelque soit le joueur qui a lancé
+        for joueur in self.joueurs:
+            for carte in joueur.ville.etablissements:
+                if isinstance(carte, Bleu) and carte.est_active(total, joueur == self.joueur_actuel):
+                    carte.appliquer_effet(joueur)
+                    
+        # cartes vertes: seulement pour le joueur dont c'est le tour
+        for carte in self.joueur_actuel.ville.etablissements:
+            if isinstance(carte, Vert) and carte.est_active(total, True):
+                carte.appliquer_effet(self.joueur_actuel)
          
     def tour_joueur(self):           # relancer : simule le choix du joueur de relancer ses dés. Cette option n'a d'effet que si le joueur possède la Tour radio (règle du livret : "une fois par tour, vous pouvez choisir de relancer vos dés")
         """Déroule un tour complet du joueur courant."""
@@ -69,11 +92,15 @@ class Partie:
         if joueur.ville.a_monument("Tour radio") and self.souhaite_relancer():
             resultats = self.lancer_des(nb_des) # Le nouveau lancer REMPLACE l'ancien : une variable ne garde qu'une seule valeur à la fois, donc l'ancien résultat est oublié, même s'il était meilleur. C'est le nouveau qui compte pour la suite.
 
+        total = sum(resultats)      # additionner les dés avec sum(...)
+        self.paiements(total)       # Effets des cartes : d'abord les paiements, puis les revenus
+        self.revenus(total)
+
+        # Parc d'attractions : un double fait rejouer, donc on ne passe pas la main
         rejoue = False
         if joueur.ville.a_monument("Parc d'attractions") and self.de_double(resultats):
             rejoue = True # donc on ne change pas d'indice courant et on reste sur le meme joueur, ça rejoue pour le meme joueur
-        if not rejoue:             # "not" inverse : si ce n'est pas le cas
+        if not rejoue:             # "not" inverse : si ce n'est pas le cas     
             self.joueur_suivant()
     
-        total = sum(resultats)      # additionner les dés avec sum(...)
         return resultats, total
