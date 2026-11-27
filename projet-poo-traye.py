@@ -42,15 +42,15 @@ class Partie:
         joueur = self.joueurs[self.indice_courant] # le joueur courant
 
         nb_des = 1
-        if joueur.a_monument("Gare"):
+        if joueur.ville.a_monument("Gare"):
             nb_des = 2
         resultats = self.lancer_des(nb_des)     # lancer nb_des dé avec lancer_des
        
-        if joueur.a_monument("Tour radio") and relancer:
+        if joueur.ville.a_monument("Tour radio") and relancer:
             resultats = self.lancer_des(nb_des) # Le nouveau lancer REMPLACE l'ancien : une variable ne garde qu'une seule valeur à la fois, donc l'ancien résultat est oublié, même s'il était meilleur. C'est le nouveau qui compte pour la suite.
 
         rejoue = False
-        if joueur.a_monument("Parc d'attractions") and self.de_double(resultats):
+        if joueur.ville.a_monument("Parc d'attractions") and self.de_double(resultats):
             rejoue = True # donc on ne change pas d'indice courant et on reste sur le meme joueur, ça rejoue pour le meme joueur
         if not rejoue:             # "not" inverse : si ce n'est pas le cas
             self.joueur_suivant()
