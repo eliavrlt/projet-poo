@@ -99,7 +99,7 @@ class Partie:
         # Parc d'attractions : un double fait rejouer, donc on ne passe pas la main
         rejoue = False
         if joueur.ville.a_monument("Parc d'attractions") and self.de_double(resultats):
-            rejoue = True # donc on ne change pas d'indice courant et on reste sur le meme joueur, ça rejoue pour le meme joueur
+            rejoue = True          # donc on ne change pas d'indice courant et on reste sur le meme joueur, ça rejoue pour le meme joueur
         if not rejoue:             # "not" inverse : si ce n'est pas le cas     
             self.joueur_suivant()
     
