@@ -73,3 +73,4 @@ class Affichage:
                 morceaux.append(de[i])           # la ligne numéro i de ce dé
             lignes.append("  ".join(morceaux))   # deux espaces entre les dés
         return "\n".join(lignes)
+        i
