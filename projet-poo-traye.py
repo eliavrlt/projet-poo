@@ -1,18 +1,5 @@
 import random
 
-
-# En attendant que la classe Joueur soit définitivement créé, on utilise en reférence la classe suivante : 
-class Joueur:
-    def __init__(self, nom):
-        self.nom = nom
-        self.pieces = 3              # chaque joueur démarre avec 3 pièces
-        self.monuments = set()       # noms des monuments construits, vide au départ
-
-    def a_monument(self, nom):
-        """Renvoie True si le joueur a construit ce monument."""
-        return nom in self.monuments
-
-
 class Partie:
     def __init__(self, joueurs, graine=None):
         self._joueurs = joueurs                # liste d'objets Joueur
