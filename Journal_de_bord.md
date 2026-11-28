@@ -40,3 +40,7 @@ Quelques règles à respecter pour faciliter le travail en groupe :
 
 
 « L'objectif est que tout le monde travaille sur une version commune et à jour du projet. »
+
+### Cas limite : 
+un monument acheté pendant un tour est-il actif tout de suite ?
+Si un joueur fait un double pendant son tour puis achète le Parc d'attractions avant la fin de ce même tour, notre code le fait rejouer, car le bloc du Parc est vérifié après l'achat. Le livret dit seulement qu'un monument construit est « maintenant actif », sans préciser s'il l'est dès ce tour ou seulement au suivant. Deux lectures sont possibles : (A) l'effet est actif immédiatement, ce que fait notre code actuel ; (B) l'effet ne compte qu'à partir du tour suivant, ce qui demanderait de noter avant l'achat si le joueur avait déjà le Parc. Nous avons gardé la lecture A, qui suit la formulation du livret
