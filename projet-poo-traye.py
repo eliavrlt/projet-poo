@@ -19,6 +19,7 @@ class Partie:
         self._indice_courant = 0               # à qui le tour
         self._rng = random.Random(graine)      # hasard reproductible pour les tests
         self._reserve = Reserve()              # une reserve
+        self._gagnant = None                   # personne n'a gagné pour l'instant
 
     @property
     def joueurs(self):
@@ -32,6 +33,11 @@ class Partie:
     def joueur_actuel(self):
         """Le joueur dont c'est le tour."""
         return self._joueurs[self._indice_courant]
+
+    @property
+    def gagnant(self):
+        """Le joueur qui a gagné, ou None si la partie continue."""
+        return self._gagnant
         
 
     def lancer_des(self, nb_des):
@@ -81,7 +87,7 @@ class Partie:
             if isinstance(carte, Vert) and carte.est_active(total, True):
                 carte.appliquer_effet(self.joueur_actuel)
          
-    def tour_joueur(self):           # relancer : simule le choix du joueur de relancer ses dés. Cette option n'a d'effet que si le joueur possède la Tour radio (règle du livret : "une fois par tour, vous pouvez choisir de relancer vos dés")
+    def tour_joueur(self):           
         """Déroule un tour complet du joueur courant."""
         joueur = self.joueur_actuel # le joueur courant
 
@@ -97,8 +103,13 @@ class Partie:
         self.paiements(total)       # Effets des cartes : d'abord les paiements, puis les revenus
         self.revenus(total)
         self.achat_cartes()         # l'achat
+        if self.victoire() :        # Victoire : on vérifie AVANT de passer la main (victoire lit le joueur actuel)
+            self._gagnant = joueur
+            return resultats, total
 
         # Parc d'attractions : un double fait rejouer, donc on ne passe pas la main
+        # Ce bloc en dernier : passer la main est toujours la dernière action du tour,
+        # sinon les effets ci-dessus (paiements, revenus, achat) toucheraient le mauvais joueur.
         rejoue = False
         if joueur.ville.a_monument("Parc d'attractions") and self.de_double(resultats):
             rejoue = True          # donc on ne change pas d'indice courant et on reste sur le meme joueur, ça rejoue pour le meme joueur
@@ -160,3 +171,27 @@ class Partie:
 
             print("Ce monument n'existe pas.")
             return False
+
+
+
+    # --- Victoire (fait par ma camarade) adapté à ma classe Partie et ses differentes fonction ---
+    def victoire(self) -> bool:
+        """Renvoie True si le joueur actuel a construit ses 4 monuments."""
+        for monument in self.joueur_actuel.ville.monuments:
+            if not monument.construit:     # un seul monument non construit suffit : pas gagné
+                return False
+        return True                        # aucun monument manquant : gagné
+
+
+    def jouer(self):
+        """ Fait jouer des tours jusqu'à ce qu'un joueur gagne. Renvoie le gagnant."""
+        while self.gagnant is None:
+            self.tour_joueur()
+        return self._gagnant
+
+
+
+
+
+
+
