@@ -42,7 +42,8 @@ class Partie:
             resultats.append(de)
         return resultats 
         
-    def de_double(self, resultats):
+    def de_double(self, resultats):       
+        """Renvoie True si on a lancé 2 dés de même valeur (un double)."""
         if len(resultats) == 2:
             return resultats[0]==resultats[1]
         else:
@@ -95,12 +96,67 @@ class Partie:
         total = sum(resultats)      # additionner les dés avec sum(...)
         self.paiements(total)       # Effets des cartes : d'abord les paiements, puis les revenus
         self.revenus(total)
+        self.achat_cartes()         # l'achat
 
         # Parc d'attractions : un double fait rejouer, donc on ne passe pas la main
         rejoue = False
         if joueur.ville.a_monument("Parc d'attractions") and self.de_double(resultats):
             rejoue = True          # donc on ne change pas d'indice courant et on reste sur le meme joueur, ça rejoue pour le meme joueur
         if not rejoue:             # "not" inverse : si ce n'est pas le cas     
-            self.joueur_suivant()
+            self.joueur_suivant()  
     
         return resultats, total
+
+
+    # --- Achat de cartes (écrit par ma camarade) ---
+
+
+    def souhaite_acheter(self) -> bool:
+        """Demande au joueur s'il veut acheter une carte."""
+        reponse = input("Souhaitez-vous acheter une carte ? (1 = Oui, 0 = Non) : ")
+        return reponse == "1"
+
+    def achat_cartes(self):
+        """Fait acheter une carte (établissement ou monument) au joueur actuel. Renvoie True si l'achat a eu lieu, False sinon."""
+        if not self.souhaite_acheter():
+            return False
+
+        nom = input("Quelle carte souhaitez-vous acheter ? ")   # attention à l'orthographe
+        joueur = self.joueur_actuel
+
+        # Cas 1 : un établissement (il est dans la réserve)
+        if nom in self._reserve._cartes:
+            if not self._reserve.est_disponible(nom):
+                print("Cette carte n'est plus disponible.")
+                return False
+
+            carte = self._reserve._cartes[nom]["objet"]   # pour connaître son coût
+            prix = carte.cout
+
+            if joueur.argent >= prix:        # on vérifie AVANT de payer
+                joueur.payer(prix)
+                carte = self._reserve.prendre_carte(nom)
+                joueur.ville.ajouter_carte(carte)
+                return True
+
+            print("Le joueur n'a pas assez d'argent")
+            return False
+
+        # Cas 2 : un monument (il est déjà dans la ville, à l'état « non construit »)
+        else:
+            for monument in joueur.ville.monuments:
+                if monument.nom == nom:
+                    if monument.construit:
+                        print("Monument déjà construit")
+                        return False
+
+                    if joueur.argent >= monument.cout:
+                        joueur.payer(monument.cout)
+                        monument.construire()
+                        return True
+
+                    print("Pas assez d'argent")
+                    return False
+
+            print("Ce monument n'existe pas.")
+            return False
