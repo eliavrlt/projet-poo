@@ -1,3 +1,41 @@
+"""
+TODO POUR L'ASSEMBLAGE (dimanche)
+Base : la classe Partie de Traye (graine, liste de dés, effets, Parc, victoire).
+
+--- À DEMANDER À ELIA (cartes, Joueur, Ville, Reserve) ---
+ 1. Garder UNE SEULE classe Ville, Monument, Reserve (avec Ryma).
+ 2. Joueur.__init__ : remplacer self._argent=3 par self._argent = argent.
+ 3. Ville : ajouter les propriétés "etablissements" et "monuments"
+    (Partie lit joueur.ville.etablissements et joueur.ville.monuments).
+ 4. Ville : garder a_monument(nom) (Partie l'appelle pour la Gare,
+    la Tour radio et le Parc d'attractions).
+ 5. Numéros des cartes : Forêt = 5, Mine = 9, Marché de fruits et légumes = 11 et 12.
+ 6. Noms : "Supérette" dans la Reserve et "Superette" dans la carte (une seule orthographe).
+ 7. Cartes violettes (Stade, Chaîne, Centre d'affaires) : elles ont encore des
+    appliquer_effet différents, et aucune n'est appelée par Partie.revenus.
+    À régler ensemble, en dernier.
+
+--- À DEMANDER À RYMA (IA et choix des joueurs) ---
+ 1. Envoyer le fichier ia.py (sa Partie fait "from ia import IA", mais on ne l'a surement pas encore fait).
+ 2. Intégrer dans MA Partie : le contrôle de 2 à 4 joueurs, le choix de
+    1 ou 2 dés avec la Gare, choisir_joueur, la branche IA de achat_cartes.
+ 3. À NE PAS prendre : lancer_de (somme, sans graine : on a besoin de la liste
+    des dés pour détecter un double), tour_joueur (incomplet), monuments[0]
+    pour repérer la Gare, _joueur_actuel (un numéro : chez moi c'est
+    _indice_courant, et joueur_actuel est le joueur lui-même).
+  4. choisir_joueur (Chaîne de télévision) :
+    - Elia appelle partie.choisir_joueur(proprietaire), avec un paramètre ;
+    - la méthode de Ryma n'en prend pas : choisir_joueur(self).
+    -> On peut garder la méthode de Ryma (elle retrouve déjà le joueur actuel),
+       et Elia enlève le paramètre dans sa carte.
+    -> Traye copie la méthode de Ryma dans sa Partie, en remplaçant
+       self._joueur_actuel par self.joueur_actuel.
+
+--- CE QUE JE DOIS FAIRE MOI ---
+ - Adapter Affichage à la classe Joueur d'Elia (argent, ville.monuments).
+ - Mettre à jour la docstring de tour_joueur quand l'IA sera intégrée.
+ - Écrire les tests (à la fin). """
+
 import random
 
 class Partie:
@@ -175,10 +213,4 @@ class Partie:
         while self.gagnant is None:
             self.tour_joueur()
         return self._gagnant
-
-
-
-
-
-
 
